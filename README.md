@@ -1,5 +1,15 @@
 # Simple RabbitMQ Consumer
 
+## Overview
+
+This application simply consumes RabbitMQ messages from a queue named `hello`.
+
+## Version
+
+- Java 11
+- Maven 3.6.3
+- Unit
+
 ## Run RabbitMQ Consumer
 
 ### With local java and RabbitMQ
@@ -44,7 +54,7 @@
 1. Run RabbitMQ and this application
 
     ```
-    docker-compose up --build
+    docker-compose up # docker-compose up --build if you need to build
     ```
 
 1. Publish a message
