@@ -1,37 +1,54 @@
 # Simple RabbitMQ Consumer
 
-## Prerequisite
-
-Mac OS
-
-```
-brew install rabbitmq
-brew services start rabbitmq
-export PATH=$PATH:/usr/local/opt/rabbitmq/sbin # to add rabbitmq cli
-```
-
 ## Run RabbitMQ Consumer
 
-```
-mvn clean compile assembly:single
-```
+### With local java and RabbitMQ
 
-```
-java -jar target/rabbitmqconsumer-1.0-SNAPSHOT-jar-with-dependencies.jar
-SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
-SLF4J: Defaulting to no-operation (NOP) logger implementation
-SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
- [*] Waiting for messages. To exit press CTRL+C
-```
+1. Run RabbitMQ
 
-```
-rabbitmqadmin publish routing_key="hello" payload="hello, world"
-Message published
-```
+    Mac OS:
 
-```
- [*] Waiting for messages. To exit press CTRL+C
- [x] Received 'hello, world'
- [x] Received 'hello, world'
- [x] Received 'hello, world'
-```
+    ```
+    brew install rabbitmq
+    brew services start rabbitmq
+    export PATH=$PATH:/usr/local/opt/rabbitmq/sbin # to add rabbitmq cli
+    ```
+
+    Other OS: TBD
+
+1. Build
+
+    ```
+    mvn clean compile assembly:single
+    ```
+1. Run
+    ```
+    java -jar target/rabbitmqconsumer-1.0-SNAPSHOT-jar-with-dependencies.jar
+    ```
+1. Publish a message
+    ```
+    rabbitmqadmin publish routing_key="hello" payload="hello, world"
+    ```
+
+1. Check
+
+    ```
+    [*] Waiting for messages. To exit press CTRL+C
+    [x] Received 'hello, world'
+    [x] Received 'hello, world'
+    [x] Received 'hello, world'
+    ```
+
+### With Docker
+
+1. Run RabbitMQ and this application
+
+    ```
+    docker-compose up --build
+    ```
+
+1. Publish a message
+
+    ```
+    docker exec -it $(docker ps | grep rabbitmq-consumer_rabbitmq_1 | awk '{print $1}') rabbitmqadmin publish routing_key="hello" payload="hello, world"
+    ```

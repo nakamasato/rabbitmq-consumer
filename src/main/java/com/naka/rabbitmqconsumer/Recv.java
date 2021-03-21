@@ -10,7 +10,9 @@ public class Recv {
 
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        factory.setHost(System.getenv().getOrDefault("RABBITMQ_HOST", "localhost"));
+        factory.setUsername(System.getenv().getOrDefault("RABBITMQ_USERNAME", "guest"));
+        factory.setPassword(System.getenv().getOrDefault("RABBITMQ_PASSWORD", "guest"));
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
