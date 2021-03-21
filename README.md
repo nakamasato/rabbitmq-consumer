@@ -2,7 +2,7 @@
 
 ## Overview
 
-This application simply consumes RabbitMQ messages from a queue named `hello`.
+This application simply consumes RabbitMQ messages from a queue named `hello` and each message needs `PROCESS_SECONDS` seconds to complete processing.
 
 ## Version
 
@@ -43,10 +43,16 @@ This application simply consumes RabbitMQ messages from a queue named `hello`.
 1. Check
 
     ```
-    [*] Waiting for messages. To exit press CTRL+C
-    [x] Received 'hello, world'
-    [x] Received 'hello, world'
-    [x] Received 'hello, world'
+    Waiting for messages. To exit press CTRL+C
+    Received 'hello, world'. It will take 10 seconds to complete processing.
+    Finished Processing 'hello, world'
+    Received 'hello, world'. It will take 10 seconds to complete processing.
+    Finished Processing 'hello, world'
+    Received 'hello, world'. It will take 10 seconds to complete processing.
+    Finished Processing 'hello, world'
+    Received 'hello, world'. It will take 10 seconds to complete processing.
+    Finished Processing 'hello, world'
+    Received 'hello, world'. It will take 10 seconds to complete processing.
     ```
 
 ### With Docker
