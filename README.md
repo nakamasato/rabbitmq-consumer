@@ -8,7 +8,6 @@ This application simply consumes RabbitMQ messages from a queue named `hello` an
 
 - Java 11
 - Maven 3.6.3
-- Unit
 
 ## Run RabbitMQ Consumer
 
