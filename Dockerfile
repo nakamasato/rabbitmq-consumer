@@ -8,5 +8,5 @@ RUN mvn clean compile assembly:single
 
 FROM adoptopenjdk/openjdk11:alpine-slim
 WORKDIR /root/
-COPY --from=BUILD_IMAGE /usr/app/target/rabbitmqconsumer-1.0-SNAPSHOT-jar-with-dependencies.jar ./rabbitmqconsumer-jar.jar
-CMD ["java","-jar","rabbitmqconsumer-jar.jar"]
+COPY --from=BUILD_IMAGE /usr/app/target/rabbitmq-consumer-1.0-SNAPSHOT-jar-with-dependencies.jar ./rabbitmq-consumer.jar
+CMD ["java","-jar","rabbitmq-consumer.jar"]
