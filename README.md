@@ -33,7 +33,7 @@ This application simply consumes RabbitMQ messages from a queue named `hello` an
     ```
 1. Run
     ```
-    java -jar target/rabbitmqconsumer-1.0-SNAPSHOT-jar-with-dependencies.jar
+    java -jar target/rabbitmq-consumer-1.0-SNAPSHOT-jar-with-dependencies.jar
     ```
 1. Publish a message
     ```
