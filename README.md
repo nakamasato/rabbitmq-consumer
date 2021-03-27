@@ -2,11 +2,11 @@
 
 ## Overview
 
-This application simply
-- consumes RabbitMQ messages from a queue named `hello`
-- needs `PROCESS_SECONDS` seconds to complete processing each message
-- consumes one message at a time (`basicQos(prefetchCount = 1)`, `unacked` message won't exceed one)
-- sends an acknowledgement after processing a message
+This application does the followings:
+- consume RabbitMQ messages from a queue named `hello`
+- need `PROCESS_SECONDS` seconds to complete processing each message
+- consume one message at a time (`basicQos(prefetchCount = 1)`, `unacked` message won't exceed one)
+- send an acknowledgement after processing a message
 
 ## Version
 
