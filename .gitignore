@@ -3,4 +3,6 @@ target
 .settings
 .vscode
 .classpath
+.idea
 bin
+rabbitmqconsumer.iml
