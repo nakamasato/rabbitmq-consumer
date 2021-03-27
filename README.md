@@ -2,13 +2,16 @@
 
 ## Overview
 
-This application simply consumes RabbitMQ messages from a queue named `hello` and each message needs `PROCESS_SECONDS` seconds to complete processing.
+This application does the followings:
+- consume RabbitMQ messages from a queue named `hello`
+- need `PROCESS_SECONDS` seconds to complete processing each message
+- consume one message at a time (`basicQos(prefetchCount = 1)`, `unacked` message won't exceed one)
+- send an acknowledgement after processing a message
 
 ## Version
 
 - Java 11
 - Maven 3.6.3
-- Unit
 
 ## Run RabbitMQ Consumer
 

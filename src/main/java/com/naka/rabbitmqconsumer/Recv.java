@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 
 public class Recv {
     private final static String QUEUE_NAME = "hello";
+    private final static int processSeconds = Integer.parseInt(System.getenv().getOrDefault("PROCESS_SECONDS", "10"));
 
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
@@ -18,9 +19,10 @@ public class Recv {
         factory.setPassword(System.getenv().getOrDefault("RABBITMQ_PASSWORD", "guest"));
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
-        int processSeconds = Integer.parseInt(System.getenv().getOrDefault("PROCESS_SECONDS", "10"));
+        int prefetchCount = Integer.parseInt(System.getenv().getOrDefault("RABBITMQ_PREFETCH_COUNT", "1"));
 
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        channel.basicQos(prefetchCount);
         System.out.println("Waiting for messages. To exit press CTRL+C");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -29,14 +31,20 @@ public class Recv {
             Date date = new Date(System.currentTimeMillis());
             System.out.println(formatter.format(date) + " Received '" + message + "'. It will take " + processSeconds + " seconds to complete processing.");
             try {
-                TimeUnit.SECONDS.sleep(processSeconds);
+                doWork(message);
             } catch(InterruptedException e) {
                 System.out.println("sleep failed");
+            } finally {
+                channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
             }
             date = new Date(System.currentTimeMillis());
             System.out.println(formatter.format(date) + " Finished Processing '" + message + "'");
         };
-        channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> {
+        channel.basicConsume(QUEUE_NAME, false, deliverCallback, consumerTag -> {
         });
+    }
+
+    private static void doWork(String task) throws InterruptedException {
+        TimeUnit.SECONDS.sleep(processSeconds);
     }
 }
